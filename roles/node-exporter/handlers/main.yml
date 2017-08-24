@@ -1,0 +1,5 @@
+---
+- name: reload node_exporter
+  service:
+    name: node_exporter
+    state: reloaded
