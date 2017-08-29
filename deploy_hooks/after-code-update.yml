@@ -1,0 +1,6 @@
+---
+- bundler:
+    state: present
+    deployment_mode: yes
+    executable: "{{ ansible_env.HOME }}/.rbenv/shims/bundle"
+    gemfile: "{{ ansistrano_deploy_to }}/current/Gemfile"
