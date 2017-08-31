@@ -8,6 +8,9 @@
     - "{{ app_path }}"
     - "{{ shared_path }}"
     - "{{ config_path }}"
+    - "{{ sockets_path }}"
+    - "{{ log_path }}"
+    - "{{ pids_path }}"
 
 - name: Create configuration files from templates
   template:
@@ -17,3 +20,8 @@
     mode: "0775"
   with_items:
     - { src: "application.yml.j2", dest: "{{ config_path }}/application.yml" }
+
+- name: Create systemd service unit
+  template:
+    src: "katuma_reports_unicorn.service.j2"
+    dest: "/etc/systemd/system/katuma_reports_unicorn.service"

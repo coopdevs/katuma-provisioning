@@ -1,0 +1,13 @@
+[Unit]
+Description=Katuma reports unicorn application server
+After=network.target
+
+[Service]
+Type=forking
+PIDFile={{ pid_path }}/unicorn.pid
+User={{ unicorn_user }}
+WorkingDirectory={{ app_path }}/current
+ExecStart=/home/{{ unicorn_user }}/.rbenv/shims/bundle exec unicorn -D -E {{ rails_env }} -c ./config/unicorn.rb
+
+[Install]
+WantedBy=multi-user.target

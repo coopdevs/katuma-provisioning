@@ -20,3 +20,6 @@
         app_path: "/home/{{ unicorn_user }}/apps/katuma_reports"
         shared_path: "{{ app_path }}/shared"
         config_path: "{{ shared_path }}/config"
+        sockets_path: "{{ shared_path }}/sockets"
+        log_path: "{{ shared_path }}/log"
+        pids_path: "{{ shared_path }}/pids"
