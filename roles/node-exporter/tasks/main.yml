@@ -61,6 +61,7 @@
     dest: "/lib/systemd/system/node_exporter.service"
 
 - name: set INIT status and start
+  become: true
   service:
     name: node_exporter
     enabled: yes
