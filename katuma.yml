@@ -2,6 +2,7 @@
 - name: Katuma customizations over OFN
   hosts: ofn_servers
   remote_user: "{{ user }}"
+  become: true
 
   vars:
     prometheus_group: prometheus
@@ -14,3 +15,8 @@
 
   roles:
     - role: node-exporter
+    - role: katuma_reports
+      vars:
+        app_path: "/home/{{ unicorn_user }}/apps/katuma_reports"
+        shared_path: "{{ app_path }}/shared"
+        config_path: "{{ shared_path }}/config"

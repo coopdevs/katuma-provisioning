@@ -1,0 +1,19 @@
+---
+- name: Create katuma_reports directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ unicorn_user }}"
+  with_items:
+    - "{{ app_path }}"
+    - "{{ shared_path }}"
+    - "{{ config_path }}"
+
+- name: Create configuration files from templates
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ unicorn_user }}"
+    mode: "0775"
+  with_items:
+    - { src: "application.yml.j2", dest: "{{ config_path }}/application.yml" }
