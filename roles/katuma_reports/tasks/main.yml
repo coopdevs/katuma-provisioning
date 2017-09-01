@@ -25,3 +25,22 @@
   template:
     src: "katuma_reports_unicorn.service.j2"
     dest: "/etc/systemd/system/katuma_reports_unicorn.service"
+
+- name: Enable and start systemd service unit
+  systemd:
+    name: "katuma_reports_unicorn.service"
+    enabled: true
+    state: started
+
+- name: Create custom nginx configuration directory
+  file:
+    path: "/etc/nginx/sites-available/ofn"
+    state: directory
+
+- name: Create nginx server configuration
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: "katuma_reports_upstream.conf.j2", dest: "/etc/nginx/conf.d/katuma_reports_upstream.conf" }
+    - { src: "katuma_reports.conf.j2", dest: "/etc/nginx/sites-available/ofn/katuma_reports.conf" }
