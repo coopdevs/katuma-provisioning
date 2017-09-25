@@ -12,12 +12,12 @@ Make sure the installed files end up in `vendor/` instead of the default `commun
 
 ## Provisioning
 ```shell
-~/ofn-install $ ansible-playbook ../katuma-provisioning/katuma.yml --limit=es-staging -e "@../katuma_secrets/staging.yml" --ask-vault-pass
+~/ofn-install $ ansible-playbook ../katuma-provisioning/katuma.yml --limit=es-staging -e "@../katuma_secrets/staging.yml" -i inventory/hosts --ask-vault-pass
 ```
 
 ## Katuma reports app deploy
 ```shell
-~/ofn-install $ ansible-playbook ../katuma-provisioning/deploy.yml --limit=es-staging -e "@../katuma_secrets/staging.yml" --ask-vault-pass
+~/ofn-install $ ansible-playbook ../katuma-provisioning/deploy.yml --limit=es-staging -e "@../katuma_secrets/staging.yml" -i inventory/hosts --ask-vault-pass
 ```
 
 ## Is this a hack?
