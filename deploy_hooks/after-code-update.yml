@@ -12,3 +12,12 @@
     dest: "{{ ansistrano_release_path.stdout }}/config/application.yml"
     state: link
     owner: "{{ unicorn_user }}"
+
+- name: Precompile assets
+  command: "{{ bundle_exec }} exec rake assets:precompile"
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}"
+  vars:
+    bundle_exec: "{{ ansible_env.HOME }}/.rbenv/shims/bundle"
+  environment:
+    RAILS_ENV: "{{ rails_env }}"
