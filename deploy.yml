@@ -6,7 +6,6 @@
   become_user: "{{ unicorn_user }}"
 
   vars:
-    ansistrano_deploy_from: "{{ playbook_dir }}/../katuma_reports"
     ansistrano_deploy_to: "/home/{{ unicorn_user }}/apps/katuma_reports"
     ansistrano_keep_releases: 3
     ansistrano_deploy_via: git
