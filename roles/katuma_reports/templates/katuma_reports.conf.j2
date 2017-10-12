@@ -1,3 +1,11 @@
 location {{ ofn_route_override }} {
     proxy_pass http://katuma_reports_unicorn;
 }
+
+location /admin/reports/assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+
+    root /home/openfoodnetwork/apps/katuma_reports/current/public;
+}
