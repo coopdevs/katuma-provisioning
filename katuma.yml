@@ -24,3 +24,4 @@
         log_path: "{{ shared_path }}/log"
         pids_path: "{{ shared_path }}/pids"
         ofn_route_override: "/admin/reports/order_cycle_management"
+        katuma_reports_route: "/admin/reports/variants_by_order"

@@ -2,6 +2,10 @@ location {{ ofn_route_override }} {
     proxy_pass http://katuma_reports_unicorn;
 }
 
+location {{ katuma_reports_route }} {
+    proxy_pass http://katuma_reports_unicorn;
+}
+
 location /admin/reports/assets/ {
     gzip_static on;
     expires max;
