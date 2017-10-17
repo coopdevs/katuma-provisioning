@@ -21,3 +21,6 @@
     bundle_exec: "{{ ansible_env.HOME }}/.rbenv/shims/bundle"
   environment:
     RAILS_ENV: "{{ rails_env }}"
+
+- name: Restart katuma_reports_unicorn
+  command: "systemctl restart katuma_reports_unicorn.service"
