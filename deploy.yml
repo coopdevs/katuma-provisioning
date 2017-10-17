@@ -17,3 +17,6 @@
 
   roles:
     - role: vendor/carlosbuenosvinos.ansistrano-deploy
+
+  notify:
+    - restart katuma_reports_unicorn
