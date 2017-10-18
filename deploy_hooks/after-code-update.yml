@@ -23,5 +23,6 @@
     RAILS_ENV: "{{ rails_env }}"
 
 - name: Restart katuma_reports_unicorn
-  command: "systemctl restart katuma_reports_unicorn.service"
-  become: true
+  service:
+    name: katuma_reports_unicorn
+    state: restarted
