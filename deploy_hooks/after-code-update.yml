@@ -24,3 +24,4 @@
 
 - name: Restart katuma_reports_unicorn
   command: "systemctl restart katuma_reports_unicorn.service"
+  become: true
