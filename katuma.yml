@@ -15,6 +15,7 @@
 
   roles:
     - role: node-exporter
+    - role: backups
     - role: katuma_reports
       vars:
         app_path: "/home/{{ unicorn_user }}/apps/katuma_reports"

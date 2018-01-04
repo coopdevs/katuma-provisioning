@@ -1,0 +1,43 @@
+---
+- name: Ensure directory for user scripts exists
+  file:
+    path: /home/ofn-admin/bin
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0775
+
+- name: Copy backup script
+  copy:
+    src: files/backups.sh
+    dest: /home/ofn-admin/bin/backups.sh
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0775
+
+- name: Install restic
+  vars:
+    restic_version: '0.8.1'
+    restic_repos:
+      - name: 'katuma'
+        url: 'b2:katuma-staging'
+        password: "{{ restic_password }}"
+        access_key: "{{ b2_account_id }}"
+        secret_key: "{{ b2_account_key }}"
+    restic_jobs_raw:
+      - command: '/home/ofn-admin/bin/backups.sh && restic backup /tmp/git_rev /tmp/pg_dump /tmp/shared.tar.gz'
+        at: '5 10 * * *'
+        user: "{{ user }}"
+      - command: 'restic forget --keep-last 5 --prune'
+        at: '5 11 */5 * *'
+        user: "{{ user }}"
+  include_role:
+    name: vendor/enricostano.ansible-restic
+
+# This override is needed until the following issue get solved:
+# https://github.com/donat-b/ansible-restic/pull/5#issuecomment-355022413
+- name: Ensure restic password file can be read by ofn-admin user
+  file:
+    path: '/var/lib/restic/passwd_katuma'
+    owner: "{{ user }}"
+    group: "{{ user }}"
