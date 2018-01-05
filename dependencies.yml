@@ -1,2 +1,4 @@
 - src: carlosbuenosvinos.ansistrano-deploy
   version: 2.7.0
+- src: donat-b.restic
+  version: 0.4
