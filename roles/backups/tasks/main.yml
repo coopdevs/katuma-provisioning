@@ -20,10 +20,10 @@
     restic_version: '0.8.1'
     restic_repos:
       - name: 'katuma'
-        url: 'b2:katuma-staging'
+        url: "{{ backup_bucket_url }}"
         password: "{{ restic_password }}"
-        access_key: "{{ b2_account_id }}"
-        secret_key: "{{ b2_account_key }}"
+        access_key: "{{ backup_account_id }}"
+        secret_key: "{{ backup_account_key }}"
     restic_jobs_raw:
       - command: '/home/ofn-admin/bin/backups.sh && restic backup /tmp/git_rev /tmp/pg_dump /tmp/shared.tar.gz'
         at: '5 10 * * *'
