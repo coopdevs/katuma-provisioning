@@ -14,7 +14,6 @@
     node_exporter_version: 0.14.0
 
   roles:
-    - role: node-exporter
     - role: katuma_reports
       vars:
         app_path: "/home/{{ unicorn_user }}/apps/katuma_reports"
