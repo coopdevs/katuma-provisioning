@@ -4,15 +4,6 @@
   remote_user: "{{ user }}"
   become: true
 
-  vars:
-    prometheus_group: prometheus
-    prometheus_user: prometheus
-    prometheus_install_path: /opt/prometheus
-    prometheus_log_path: /var/log/prometheus
-    prometheus_pid_path: /var/run/prometheus
-    prometheus_db_path: /var/lib/prometheus
-    node_exporter_version: 0.14.0
-
   roles:
     - role: katuma_reports
       vars:
