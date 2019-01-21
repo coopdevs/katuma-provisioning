@@ -14,3 +14,16 @@
         log_path: "{{ shared_path }}/log"
         pids_path: "{{ shared_path }}/pids"
         ofn_route_override: "/admin/reports/order_cycle_management"
+
+    - role: jdauphant.nginx
+      vars:
+        - old_domain: alpha.katuma.org
+      nginx_sites:
+        katuma_redirect:
+          - listen 443 ssl http2
+          - listen [::]:443 ssl http2
+          - server_name {{ old_domain }}
+          - return 301 https://{{ domain }}$request_uri
+
+          - ssl_certificate      /etc/letsencrypt/live/{{ certbot_cert_name | default(domain) }}/fullchain.pem
+          - ssl_certificate_key  /etc/letsencrypt/live/{{ certbot_cert_name | default(domain) }}/privkey.pem
