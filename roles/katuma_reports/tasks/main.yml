@@ -1,8 +1,14 @@
 ---
-- name: Create katuma_reports directories
+- name: Disable and stop systemd service unit
+  systemd:
+    name: "katuma_reports_unicorn.service"
+    enabled: false
+    state: stopped
+
+- name: Remove katuma_reports directories
   file:
     path: "{{ item }}"
-    state: directory
+    state: absent
     owner: "{{ unicorn_user }}"
   with_items:
     - "{{ app_path }}"
@@ -12,37 +18,24 @@
     - "{{ log_path }}"
     - "{{ pids_path }}"
 
-- name: Create configuration files from templates
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: "{{ unicorn_user }}"
-    mode: "0775"
-  with_items:
-    - { src: "application.yml.j2", dest: "{{ config_path }}/application.yml" }
+- name: Remove systemd service unit
+  file:
+    path: "/etc/systemd/system/katuma_reports_unicorn.service"
+    state: absent
 
-- name: Create systemd service unit
-  template:
-    src: "katuma_reports_unicorn.service.j2"
-    dest: "/etc/systemd/system/katuma_reports_unicorn.service"
-
-- name: Enable and start systemd service unit
-  systemd:
-    name: "katuma_reports_unicorn.service"
-    enabled: true
-    state: started
-
-- name: Create custom nginx configuration directory
+- name: Remove custom nginx configuration directory
   file:
     path: "/etc/nginx/sites-available/ofn"
-    state: directory
+    state: absent
+  notify:
+    - reload nginx
 
-- name: Create nginx server configuration
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+- name: Remove nginx server configuration
+  file:
+    path: "{{ item }}"
+    state: absent
   with_items:
-    - { src: "katuma_reports_upstream.conf.j2", dest: "/etc/nginx/conf.d/katuma_reports_upstream.conf" }
-    - { src: "katuma_reports.conf.j2", dest: "/etc/nginx/sites-available/ofn/katuma_reports.conf" }
+    - "/etc/nginx/conf.d/katuma_reports_upstream.conf"
+    - "/etc/nginx/sites-available/ofn/katuma_reports.conf"
   notify:
     - reload nginx
