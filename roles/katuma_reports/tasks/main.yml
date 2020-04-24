@@ -1,10 +1,4 @@
 ---
-- name: Disable and stop systemd service unit
-  systemd:
-    name: "katuma_reports_unicorn.service"
-    enabled: false
-    state: stopped
-
 - name: Remove katuma_reports directories
   file:
     path: "{{ item }}"
