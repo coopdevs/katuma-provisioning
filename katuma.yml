@@ -5,16 +5,6 @@
   become: true
 
   roles:
-    - role: katuma_reports
-      vars:
-        app_path: "/home/{{ unicorn_user }}/apps/katuma_reports"
-        shared_path: "{{ app_path }}/shared"
-        config_path: "{{ shared_path }}/config"
-        sockets_path: "{{ shared_path }}/sockets"
-        log_path: "{{ shared_path }}/log"
-        pids_path: "{{ shared_path }}/pids"
-        ofn_route_override: "/admin/reports/order_cycle_management"
-
     - role: jdauphant.nginx
       vars:
         - old_domain: alpha.katuma.org
